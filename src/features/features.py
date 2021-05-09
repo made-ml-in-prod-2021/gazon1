@@ -1,33 +1,23 @@
+import gc
+import logging
+import os
+import pickle
+from argparse import (ArgumentDefaultsHelpFormatter, ArgumentParser,
+                      ArgumentTypeError, FileType, Namespace)
+from copy import deepcopy
+from datetime import datetime
 from enum import Enum, auto
-from typing import Optional, Tuple, NoReturn
+from typing import NoReturn, Optional, Tuple
 
 import numpy as np
 import pandas as pd
+import yaml
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.impute._base import _BaseImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-
 from src.entities.feature_params import FeatureParams
-
-from argparse import (
-    ArgumentDefaultsHelpFormatter, ArgumentParser,
-    ArgumentTypeError, FileType, Namespace
-)
-from copy import deepcopy
-import os
-import pickle
-import gc
-
-import yaml
-import pandas as pd
-import numpy as np
-from datetime import datetime
-import logging
-from typing import (
-    Optional,
-)
 
 logger = logging.getLogger(__name__)
 

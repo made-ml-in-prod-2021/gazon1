@@ -1,19 +1,16 @@
 import gc
-import pickle
 import logging
+import os
+import pickle
+import sys
+from argparse import (ArgumentDefaultsHelpFormatter, ArgumentParser,
+                      ArgumentTypeError, FileType, Namespace)
 from copy import deepcopy
 from datetime import datetime, timedelta
-from argparse import (
-    ArgumentDefaultsHelpFormatter, ArgumentParser,
-    ArgumentTypeError, FileType, Namespace
-)
 
-import yaml
 import numpy as np
 import pandas as pd
-
-
-import sys, os
+import yaml
 
 # sys.path = [s for s in sys.path if '/als' not in s]
 sys.path.append("/home/max/MADE/ml-prod/gazon1/")
@@ -25,26 +22,14 @@ import sys
 
 import hydra
 from omegaconf import DictConfig, OmegaConf
-
 from src.data.data import load_data
-from src.entities.pipeline_params import (
-    PipelineParams, PipelineParamsSchema
-)
-from src.features.features import (
-    make_features,
-    get_transformer,
-    MakeFeatureMode,
-    serialize_transformer,
-)
-
 from src.data_split.data_split import data_split
-from src.train.train import train_model
-from src.utils.utils import (
-    setup_logger,
-    serialize_model,
-    X_Pool,
-)
+from src.entities.pipeline_params import PipelineParams, PipelineParamsSchema
 from src.evaluate.evaluate import evaluate
+from src.features.features import (MakeFeatureMode, get_transformer,
+                                   make_features, serialize_transformer)
+from src.train.train import train_model
+from src.utils.utils import X_Pool, serialize_model, setup_logger
 
 setup_logger()
 logger = logging.getLogger(__name__)
@@ -74,7 +59,6 @@ def train_pipeline(pipeline_params: PipelineParams) -> None:
     data_train, data_val = data_split(data, pipeline_params.data_split)
 
     logger.info('saving raw training and validation datasets for preidctions')
-    # import pdb; pdb.set_trace()
 
     data_train.to_pickle(os.path.join(
         raw_dir,
@@ -123,7 +107,6 @@ def train_pipeline(pipeline_params: PipelineParams) -> None:
         pipeline_params.general.dir,
         pipeline_params.general.model_path,
     )
-    # model_path = "model.cbm"
     logger.info(f'saving model to {model_path}')
     path_to_model = serialize_model(
         model, model_path)

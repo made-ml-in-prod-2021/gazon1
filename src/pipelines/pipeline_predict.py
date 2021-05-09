@@ -1,21 +1,17 @@
 import gc
-import pickle
 import logging
+import os
+import pickle
+import sys
+from argparse import (ArgumentDefaultsHelpFormatter, ArgumentParser,
+                      ArgumentTypeError, FileType, Namespace)
 from copy import deepcopy
 from datetime import datetime, timedelta
-from argparse import (
-    ArgumentDefaultsHelpFormatter, ArgumentParser,
-    ArgumentTypeError, FileType, Namespace
-)
 
-import yaml
 import numpy as np
 import pandas as pd
+import yaml
 
-
-import sys, os
-
-# sys.path = [s for s in sys.path if '/als' not in s]
 sys.path.append("/home/max/MADE/ml-prod/gazon1/")
 
 import json
@@ -25,25 +21,14 @@ import sys
 
 import hydra
 from omegaconf import DictConfig, OmegaConf
-
 from src.data.data import load_data
-from src.entities.pipeline_params import (
-    PipelineParams, PipelineParamsSchema
-)
-from src.features.features import (
-    make_features,
-    deserialize_transformer,
-    MakeFeatureMode,
-)
-
 from src.data_split.data_split import data_split
-from src.train.train import train_model
-from src.utils.utils import (
-    setup_logger,
-    deserialize_model,
-    X_Pool,
-)
+from src.entities.pipeline_params import PipelineParams, PipelineParamsSchema
 from src.evaluate.evaluate import evaluate
+from src.features.features import (MakeFeatureMode, deserialize_transformer,
+                                   make_features)
+from src.train.train import train_model
+from src.utils.utils import X_Pool, deserialize_model, setup_logger
 
 setup_logger()
 logger = logging.getLogger(__name__)

@@ -1,11 +1,11 @@
 import logging
-import sys
 import pickle
-import pandas as pd
+import sys
+
 import numpy as np
-from catboost import (
-    CatBoost, Pool, CatBoostClassifier,
-)
+import pandas as pd
+from catboost import CatBoost, CatBoostClassifier, Pool
+
 
 def X_Pool(data: pd.DataFrame, label: np.array):
     return Pool(
@@ -33,11 +33,6 @@ def setup_logger(
 
     logger = logging.getLogger("")
     logger.setLevel(logging.DEBUG)
-
-    # file_handler = logging.FileHandler(filename=log_file)
-    # file_handler.setLevel(logging.INFO)
-    # file_handler.setFormatter(formatter)
-    # logger.addHandler(file_handler)
 
     stream_handler = logging.StreamHandler(sys.stderr)
     stream_handler.setLevel(level)
