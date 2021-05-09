@@ -1,3 +1,11 @@
-* Репозиторий для курса машинное обуч. в продакшене
-  Студент: Дробин Максим
-  [[https://data.mail.ru/profile/m.drobin/][Ссылка]] на профиль MADE
+* to launch pipeline with prediction:
+#+BEGIN_SRC bash
+  cd gazon1/src/pipelines/
+  python3 pipeline_predict.py
+#+END_SRC
+
+* to launch pipeline with train:
+#+BEGIN_SRC bash
+  cd gazon1/src/pipelines/
+  python3 pipeline_train.py
+#+END_SRC
