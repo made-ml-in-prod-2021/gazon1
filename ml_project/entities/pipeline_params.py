@@ -1,13 +1,11 @@
 from dataclasses import dataclass
-
-import yaml
 from marshmallow_dataclass import class_schema
 
-from src.entities.feature_params import FeatureParams
-from src.entities.split_params import SplitParams
-from src.entities.train_params import TrainParams
-from src.entities.data_params import DataParams
-from src.entities.general_params import GeneralParams
+from .feature_params import FeatureParams
+from .split_params import SplitParams
+from .train_params import TrainParams
+from .data_params import DataParams
+from .general_params import GeneralParams
 
 
 @dataclass()

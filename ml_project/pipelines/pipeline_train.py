@@ -1,35 +1,18 @@
-import gc
 import logging
 import os
-import pickle
-import sys
-from argparse import (ArgumentDefaultsHelpFormatter, ArgumentParser,
-                      ArgumentTypeError, FileType, Namespace)
-from copy import deepcopy
-from datetime import datetime, timedelta
-
-import numpy as np
-import pandas as pd
-import yaml
-
-# sys.path = [s for s in sys.path if '/als' not in s]
-sys.path.append("/home/max/MADE/ml-prod/gazon1/")
-
-import json
-import logging
-import os
-import sys
 
 import hydra
+from first_hw.src.data.data import load_data
+from first_hw.src.data_split.data_split import data_split
+from first_hw.src.entities.pipeline_params import (PipelineParams,
+                                                   PipelineParamsSchema)
+from first_hw.src.evaluate.evaluate import evaluate
+from first_hw.src.features.features import (MakeFeatureMode, get_transformer,
+                                            make_features,
+                                            serialize_transformer)
+from first_hw.src.train.train import train_model
+from first_hw.src.utils.utils import X_Pool, serialize_model, setup_logger
 from omegaconf import DictConfig, OmegaConf
-from src.data.data import load_data
-from src.data_split.data_split import data_split
-from src.entities.pipeline_params import PipelineParams, PipelineParamsSchema
-from src.evaluate.evaluate import evaluate
-from src.features.features import (MakeFeatureMode, get_transformer,
-                                   make_features, serialize_transformer)
-from src.train.train import train_model
-from src.utils.utils import X_Pool, serialize_model, setup_logger
 
 setup_logger()
 logger = logging.getLogger(__name__)
@@ -131,3 +114,4 @@ def main(config: DictConfig) -> None:
 
 if __name__ == "__main__":
     main()
+

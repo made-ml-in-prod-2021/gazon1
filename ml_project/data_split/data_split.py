@@ -1,13 +1,10 @@
-import os
-from argparse import (ArgumentDefaultsHelpFormatter, ArgumentParser,
-                      ArgumentTypeError, FileType, Namespace)
 from typing import Tuple
 
 import pandas as pd
-import yaml
 from sklearn.model_selection import train_test_split
-from src.entities.split_params import SplitParams
-from src.utils.utils import X_Pool
+
+from ..entities.split_params import SplitParams
+from ..utils.utils import X_Pool
 
 
 def data_split(

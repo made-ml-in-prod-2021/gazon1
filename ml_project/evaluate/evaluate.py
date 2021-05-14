@@ -1,7 +1,6 @@
 from typing import List
 
 import catboost
-import pandas as pd
 
 
 def evaluate(
