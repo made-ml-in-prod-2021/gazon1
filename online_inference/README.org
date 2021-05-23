@@ -1,0 +1,40 @@
+* Usage
+  
+start up server from docker:
+#+BEGIN_SRC bash
+    cd hw2
+  docker-compose up --build
+#+END_SRC
+
+Then enter the docker and use ~request.py~ utility to send request
+
+
+start up server locally:
+#+BEGIN_SRC bash
+cd hw2
+uvicorn app.main:app --reload
+#+END_SRC
+
+* Docker image on Docker Hub
+  docker: ~maxdrobin/inference~ ~759m
+
+  optimisation:
+  - use python3 slim docker ~100m
+  - install only nessacary libraries
+  - add option ~--no-cache-dir~ to Dockerfile (decrease in size up to ~200m)
+  - not copy data and models to docker, load them from volumes
+  - combine run and copy commands in one where possible
+  
+
+* run tests
+#+BEGIN_SRC bash
+  cd hw2/app/tests
+python3 -m pytest
+#+END_SRC
+
+* how to train model for inference
+#+BEGIN_SRC bash
+  cd hw1
+python3 pipeline_train.py
+#+END_SRC
+The take modes from hw1/models

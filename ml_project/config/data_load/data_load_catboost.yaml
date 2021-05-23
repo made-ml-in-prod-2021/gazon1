@@ -1,0 +1,6 @@
+dataset_processed_features: data/processed/catboost_df_features.pkl
+dataset_processed_splitted: data/processed/catboost_df_splitted.pkl
+dataset_raw: data/raw/catboost_df.pkl
+dataset_test: data/processed/X_test.pool
+dataset_train: data/processed/X_train.pool
+dataset_val: data/processed/X_val.pool
