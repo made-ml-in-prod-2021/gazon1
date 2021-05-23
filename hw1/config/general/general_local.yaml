@@ -1,4 +1,0 @@
-# @package _group_
-random_state: 42
-dir: /home/max/MADE/ml-prod/gazon1/hw1/
-model_path: models/model.cbm
