@@ -73,7 +73,6 @@ class Model:
         given_columns = set(data.columns)
         assert col_names == given_columns, \
             f"{col_names - given_columns}, {given_columns - col_names}"
-        # logger.info(f"feature names pf tr: {self.transformer.get_feature_names()}")
         transformed_data = self.transformer.transform(data)
         return self.model.predict_proba(transformed_data)[0, 1]
 

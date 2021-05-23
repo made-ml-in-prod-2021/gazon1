@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: drobinmax/inference:v1
+    command: uvicorn app.main:app --reload
+    volumes:
+      - "./api:/usr/inference_hw2/"
+    ports:
+      - "8000:8000"
