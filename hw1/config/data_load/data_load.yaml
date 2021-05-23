@@ -1,0 +1,6 @@
+# @package _group_
+dataset_raw_dir: data/raw/
+dataset_raw_file: heart.csv
+dataset_raw_train: data_raw_train.pkl
+dataset_raw_val: data_raw_val.pkl
+dataset_raw_test: data_raw_val.pkl

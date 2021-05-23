@@ -1,0 +1,19 @@
+#+NAME: start up server
+#+BEGIN_SRC bash
+cd hw2
+uvicorn app.main:app --reload
+#+END_SRC
+
+
+#+NAME: run tests
+#+BEGIN_SRC bash
+  cd hw2/app/tests
+python3 -m pytest
+#+END_SRC
+
+#+NAME: how to train model for inference
+#+BEGIN_SRC bash
+  cd hw1
+python3 pipeline_train.py
+#+END_SRC
+The take modes from hw1/models
