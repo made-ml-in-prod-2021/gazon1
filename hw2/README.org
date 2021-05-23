@@ -1,6 +1,6 @@
 * Usage
   
-#+NAME: start up server from docker
+start up server from docker:
 #+BEGIN_SRC bash
     cd hw2
   docker-compose up --build
@@ -9,7 +9,7 @@
 Then enter the docker and use ~request.py~ utility to send request
 
 
-#+NAME: start up server locally
+start up server locally:
 #+BEGIN_SRC bash
 cd hw2
 uvicorn app.main:app --reload
