@@ -16,7 +16,7 @@ uvicorn app.main:app --reload
 #+END_SRC
 
 * Docker image on Docker Hub
-  docker: ~maxdrobin/inference~
+  docker: ~maxdrobin/inference~ ~759m
 
   optimisation:
   - use python3 slim docker ~100m
