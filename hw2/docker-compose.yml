@@ -5,9 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: drobinmax/inference:v1
-    command: uvicorn app.main:app --reload
+    image: maxdrobin/inference:v3
+    # copy data
     volumes:
-      - "./api:/usr/inference_hw2/"
+      - "./app/data:/usr/inference_hw2/app/data"
+      - "./app/models:/usr/inference_hw2/app/models"
+    command: uvicorn app.main:app --reload
     ports:
       - "8000:8000"

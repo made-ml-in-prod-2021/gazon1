@@ -6,7 +6,6 @@ import requests
 
 from app.utils.utils import (
     generate_example_from_real_dataset,
-    # generate_example_from_synthetic_dataset
 )
 from app.main import DATA_DIR
 
@@ -17,17 +16,12 @@ REAL_DATASET_TMP_FILEPATH = os.path.join(DATA_DIR, "data.csv")
 
 @click.command()
 @click.option("--count", default=1, help="number of API requests")
-@click.option("--random-data", is_flag=True)
-def make_request(count: int, random_data: bool):
-    """Provide POST requests to classification REST service.
-    Prints requested data and server response to command line.
+def make_request(count: int):
+    """
+    Send requests for REST api service to get predictions
     Params:
         count : int - number of requests
-        random_data : bool - whether to use randomly generated data
     """
-    # if random_data:
-    #     get_data = generate_example_from_synthetic_dataset
-    # else:
     get_data = lambda: generate_example_from_real_dataset(
         REAL_DATASET_TMP_FILEPATH
     )
