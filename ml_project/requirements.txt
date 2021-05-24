@@ -1,8 +1,0 @@
-hydra-core==1.0.6
-pandas~=1.2.4
-sklearn~=0.0
-numpy~=1.20.2
-setuptools~=56.0.0
-omegaconf~=2.0.6
-marshmallow-dataclass~=8.4.1
-catboost~=0.25.1
