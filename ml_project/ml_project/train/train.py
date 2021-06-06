@@ -20,8 +20,8 @@ from typing import Dict, Union
 import catboost
 import numpy as np
 import pandas as pd
-from src.entities.feature_params import FeatureParams
-from src.entities.train_params import TrainParams
+from ..entities.feature_params import FeatureParams
+from ..entities.train_params import TrainParams
 
 
 def train_model(

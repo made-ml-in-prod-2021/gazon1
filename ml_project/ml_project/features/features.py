@@ -57,13 +57,27 @@ def make_features(
     params: FeatureParams,
     mode: MakeFeatureMode = MakeFeatureMode.train,
 ) -> Tuple[pd.DataFrame, Optional[pd.Series]]:
+
+    # import pdb; pdb.set_trace()
+
+    # ensure constant order of data columns
+    # in training and testing
+    # df = df.reindex(sorted(df.columns), axis=1)
+
+    if mode in (MakeFeatureMode.train, MakeFeatureMode.val) or \
+       (mode is MakeFeatureMode.test and \
+        params.target in df.columns):
+        target = df.pop(params.target)
+    if mode is MakeFeatureMode.test and \
+       params.target in df.columns:
+        _ = df.pop(params.target)
     if mode is MakeFeatureMode.train:
         transformer.fit(df)
     featured_df = pd.DataFrame(transformer.transform(df))
     if mode is MakeFeatureMode.test:
         return featured_df, None
 
-    target = df[params.target]
+    assert mode in (MakeFeatureMode.train, MakeFeatureMode.val)
     return featured_df, target
 
 def serialize_transformer(

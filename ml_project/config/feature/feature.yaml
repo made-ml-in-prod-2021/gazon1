@@ -1,0 +1,19 @@
+# @package _group_
+cat_features:
+  - 'cp'
+  - 'restecg'
+  - 'exang'
+  - 'thal'
+  - 'ca'
+  - 'slope'
+  - 'sex'
+  - 'fbs'
+num_features:
+  - "age"
+  - "trestbps"
+  - "chol"
+  - "thalach"
+  - "oldpeak"
+target: "target"
+to_drop: null
+transformer_save_path: models/transformer.pkl

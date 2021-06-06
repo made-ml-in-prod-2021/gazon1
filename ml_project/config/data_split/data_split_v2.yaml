@@ -1,0 +1,7 @@
+# @package _group_
+val_size: 0.5
+random_state: ${general.random_state}
+dataset_processed_dir: data/processed/
+dataset_processed_train: data_train.pkl
+dataset_processed_val: data_val.pkl
+dataset_processed_test: data_test.csv
