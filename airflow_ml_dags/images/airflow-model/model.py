@@ -4,24 +4,23 @@ import pickle
 import logging
 from typing import List
 
+import click
 import numpy as np
 import pandas as pd
-from catboost import CatBoost, CatBoostClassifier, Pool
+from catboost import CatBoost, CatBoostRegressor, Pool
 
 
 logger = logging.getLogger(__name__)
 
 TRAIN_PARAMS = {
-    'bagging_temperature': 1
-    'bootstrap_type': 'Bayesian'
-    'l2_leaf_reg': 1
-    'learning_rate': 0.6
-    'loss_function': 'Logloss'
-    'max_depth': 5
-    'n_estimators': 300
-    'random_strength': 0.5
-    'verbose': True
-    'use_best_model': True
+    'l2_leaf_reg': 1,
+    'learning_rate': 0.6,
+    'loss_function': 'RMSE',
+    'max_depth': 5,
+    'n_estimators': 300,
+    'random_strength': 0.5,
+    'verbose': True,
+    'use_best_model': True,
 }
 
 def serialize_model(model, output: str) -> str:
@@ -35,17 +34,16 @@ def deserialize_model(path: str):
 
 def train_model(
     X_train: Pool, X_val: Pool,
-    train_params=TRAIN_PARAMS: dict,
-) -> CatBoostClassifier:
-    model = CatBoostClassifier(**train_params)
+    train_params=TRAIN_PARAMS,
+) -> CatBoostRegressor:
+    model = CatBoostRegressor(**train_params)
     model.fit(X_train, eval_set=X_val)
     return model
 
 def evaluate(
     X_val: Pool,
-    model: CatBoostClassifier,
-    metrics: List[str]=['Precision', 'Recall',
-                        'F1', 'AUC:type=Classic', 'Accuracy']
+    model: CatBoostRegressor,
+    metrics: List[str]=['RMSE', 'MAE']
 ):
     return model.eval_metrics(
         X_val,
@@ -75,7 +73,7 @@ def train_pipeline(input_dir_train: str, input_dir_val: str,
         X_val_pool,
     )
 
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(model_dir, exist_ok=True)
     model_path = os.path.join(
         model_dir, 'model.cbm',
     )
@@ -101,6 +99,10 @@ def evaluate_pipeline(model_dir: str, input_dir_train: str,
     X_val_pool = Pool(X_val, y_val)
 
     logger.info('evaluate model on validation dataset')
+    model_path = os.path.join(
+        model_dir, 'model.cbm',
+    )
+    model = deserialize_model(model_path)
     metrics = evaluate(X_val_pool, model)
     logger.info(f'validation metrics: {metrics}')
     os.makedirs(output_dir, exist_ok=True)
@@ -112,10 +114,15 @@ def evaluate_pipeline(model_dir: str, input_dir_train: str,
 @click.option("--input-dir", type=click.Path(exists=True))
 @click.option("--output-dir", type=click.Path())
 @click.option("--model-dir", type=click.Path(exists=True))
-def evaluate_pipeline(model_dir: str, input_dir_train: str,
-                       input_dir_val: str, output_dir: str):
+def predict_pipeline(model_dir: str, input_dir: str,
+                      output_dir: str):
     X_test = pd.read_csv(os.path.join(input_dir, "data.csv"))
+    model_path = os.path.join(
+        model_dir, 'model.cbm',
+    )
+    model = deserialize_model(model_path)
     X_test['predictions'] = model.predict(X_test)
+    os.makedirs(output_dir, exist_ok=True)
     X_test.to_csv(os.path.join(
         output_dir, 'predictions.csv'
     ), index=False)

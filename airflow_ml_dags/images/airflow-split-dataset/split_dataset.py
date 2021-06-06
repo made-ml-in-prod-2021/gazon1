@@ -24,9 +24,9 @@ def split_dataset(input_dir: str, output_dir: str, val_size=VAL_SIZE) -> None:
                    header=True, index=False)
 
     os.makedirs(os.path.join(output_dir, "val"), exist_ok=True)
-    X_train.to_csv(os.path.join(output_dir, "val", "data.csv"),
+    X_val.to_csv(os.path.join(output_dir, "val", "data.csv"),
                    header=True, index=False)
-    y_train.to_csv(os.path.join(output_dir, "val", "target.csv"),
+    y_val.to_csv(os.path.join(output_dir, "val", "target.csv"),
                    header=True, index=False)
 
 

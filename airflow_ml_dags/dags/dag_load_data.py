@@ -8,9 +8,10 @@ from airflow.operators.docker_operator import DockerOperator
 from airflow.utils.dates import days_ago
 
 default_args = {
-    'owner': 'Drobin'
-    , 'retries': 2
-    , 'enable_xcom_pickling': True,
+    'owner': 'Drobin',
+    'retries': 2,
+    'enable_xcom_pickling': True,
+    'email': ['drobin.me@yandex.ru'],
 }
 
 docker_kwargs = {

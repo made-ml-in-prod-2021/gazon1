@@ -3,21 +3,26 @@ import os
 import sys
 
 from airflow import DAG
-from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.docker_operator import DockerOperator
 from airflow.contrib.sensors.file_sensor import FileSensor
 from airflow.utils.dates import days_ago
 
 default_args = {
-    'owner': 'Drobin'
-    , 'retries': 2
-    , 'enable_xcom_pickling': True,
+    'owner': 'Drobin',
+    'retries': 2,
+    'email_on_failure': True,
+    'email_on_retry': True,
+    'enable_xcom_pickling': True,
+    'email': ['drobin.me@yandex.ru'],
 }
 
 docker_kwargs = {
     'network_mode': "bridge",
-    'volumes': ["'/home/max/MADE/ml-prod/gazon1/data':/data"]
+    'volumes': ["/home/max/MADE/ml-prod/gazon1/data:/data"]
 }
+
+
+DOCKER_DATA_DIR = '/opt/airflow/data'
 
 # put current date in variable to use
 # one date on every task. If task_load starts at 23:59
@@ -34,24 +39,24 @@ with DAG(
     start_date=days_ago(1),
 ) as dag:
 
-    # check_data = FileSensor(
-    #     task_id="check-data-exists",
-    #     filepath=f"{AIRFLOW_BASE_DIR}/data/raw/{EXECUTION_DATE}/data.csv",
-    #     poke_interval=30,
-    #     retries=100,
-    # )
-    # check_transformer = FileSensor(
-    #     task_id="check-transformer-exists",
-    #     filepath=f"{AIRFLOW_BASE_DIR}/data/models/transformer.pickle",
-    #     poke_interval=30,
-    #     retries=100,
-    # )
-    # check_model = FileSensor(
-    #     task_id="check-model-exists",
-    #     filepath=f"{AIRFLOW_BASE_DIR}/data/models/model.pickle",
-    #     poke_interval=30,
-    #     retries=100,
-    # )
+    check_data = FileSensor(
+        task_id="check-data",
+        filepath=f"{DOCKER_DATA_DIR}/raw/{EXECUTION_DATE}/data.csv",
+        poke_interval=10,
+        retries=2,
+    )
+    check_transformer = FileSensor(
+        task_id="check-transformer",
+        filepath=f"{DOCKER_DATA_DIR}/models/transformer.pkl",
+        poke_interval=10,
+        retries=2,
+    )
+    check_model = FileSensor(
+        task_id="check-model",
+        filepath=f"{DOCKER_DATA_DIR}/models/model.cbm",
+        poke_interval=10,
+        retries=2,
+    )
 
     transform_command = \
         " transform " \
@@ -77,7 +82,5 @@ with DAG(
         **docker_kwargs,
     )
 
-    # task_start >> [
-        # check_data, check_transformer, check_model
-    # ] >> task_transform_data >> task_predict
-    task_transform_data >> task_predict
+    [check_data, check_transformer, check_model] >> \
+        task_transform_data >> task_predict

@@ -6,3 +6,4 @@ RUN pip install --user --no-cache-dir \
 
 USER root
 ENV PYTHONPATH=/home/airflow/.local/lib/python3.6/site-packages
+COPY . /opt/airflow/.
