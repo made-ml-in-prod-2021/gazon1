@@ -1,0 +1,6 @@
+defaults:
+  - model: catboost
+  - feature: feature
+  - data_load: data_load
+  - data_split: data_split
+  - general: general_local

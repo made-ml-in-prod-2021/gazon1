@@ -31,3 +31,10 @@ uvicorn app.main:app --reload
   cd hw2/app/tests
 python3 -m pytest
 #+END_SRC
+
+* how to train model for inference
+#+BEGIN_SRC bash
+  cd hw1
+python3 pipeline_train.py
+#+END_SRC
+The take modes from hw1/models
